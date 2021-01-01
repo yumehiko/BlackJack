@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3484490483556671326}
+  - component: {fileID: 3777318801114808545}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -32,6 +33,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3777318801114808545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484490483556671327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1df2c9e082ac48e8951e0c136a8e022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: {fileID: 3484490485295210445}
+  suitSprite: {fileID: 3484490484287542628}
+  suits:
+  - {fileID: 21300000, guid: cd29b0405cb6942428fa411bee1a2f34, type: 3}
+  - {fileID: 21300000, guid: 043cf866ccb954cd8afd5ca5b40ebc4c, type: 3}
+  - {fileID: 21300000, guid: e21544b88854344d39d75b3200fb2733, type: 3}
+  - {fileID: 21300000, guid: 949073363272346358cd3549958e43a2, type: 3}
+  cardBack: {fileID: 3484490484385574605}
 --- !u!1 &3484490484287542650
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,7 +64,7 @@ GameObject:
   - component: {fileID: 3484490484287542629}
   - component: {fileID: 3484490484287542628}
   m_Layer: 0
-  m_Name: SuitClub
+  m_Name: Suit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 /// <summary>
 /// トランプのスート。
@@ -45,6 +46,22 @@ public class Deck : MonoBehaviour
     /// </summary>
     private int usedCardCount = 0;
 
+
+    /// <summary>
+    /// カードの表示用の実体。
+    /// </summary>
+    [SerializeField] private GameObject cardPrefab = default;
+
+    /// <summary>
+    /// カードを生成する初期位置
+    /// </summary>
+    [SerializeField] private Transform CardInitPoint = default;
+
+    /// <summary>
+    /// 生成したカード実体のリスト。
+    /// </summary>
+    private List<GameObject> cardInstances = new List<GameObject>();
+
     /// <summary>
     /// 山札を構築
     /// </summary>
@@ -59,7 +76,7 @@ public class Deck : MonoBehaviour
                 deck.Add(new Card(j, (Suit)i));
             }
         }
-        deck = ShuffleDeck(deck);
+        ShuffleDeck();
     }
 
     /// <summary>
@@ -67,10 +84,22 @@ public class Deck : MonoBehaviour
     /// </summary>
     /// <param name="deck"></param>
     /// <returns></returns>
-    public List<Card> ShuffleDeck(List<Card> deck)
+    public void ShuffleDeck()
     {
         deck = deck.OrderBy(a => Guid.NewGuid()).ToList();
-        return deck;
+        usedCardCount = 0;
+    }
+
+    /// <summary>
+    /// カードの実体を全て破棄。
+    /// </summary>
+    public void ResetInstances()
+    {
+        foreach (GameObject instance in cardInstances)
+        {
+            Destroy(instance);
+        }
+        cardInstances.Clear();
     }
 
     /// <summary>
@@ -81,7 +110,23 @@ public class Deck : MonoBehaviour
     {
         Card pickCard = deck[usedCardCount];
         usedCardCount++;
-        Debug.Log($"{pickCard.number} : {pickCard.suit}");
         return pickCard;
+    }
+
+    /// <summary>
+    /// カード実体を生成し、配るアニメーションを再生する。
+    /// </summary>
+    /// <param name="card"></param>
+    /// <param name="dealTarget"></param>
+    /// <param name="isReverse"></param>
+    public void DealCardAnime(Card card, Player dealTarget, bool isReverse)
+    {
+        Vector3 towardPosition = dealTarget.GetDealPosition();
+        towardPosition.z = -5.0f;
+        GameObject cardInstance = Instantiate(cardPrefab, CardInitPoint.position, Quaternion.identity, transform);
+        cardInstance.GetComponent<CardInstance>().SetCardInfo(card, isReverse);
+        cardInstances.Add(cardInstance);
+        
+        cardInstance.transform.DOMove(towardPosition, 1.0f);
     }
 }
