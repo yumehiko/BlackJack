@@ -36,9 +36,14 @@ public class BlackJackDealer : BlackJackPlayer
     /// <param name="card"></param>
     private void DrawCardSecret(Card card)
     {
+        if (card.Number == 1)
+        {
+            AddAce();
+        }
+
         hiddenCard = deck.DealCardAnime(card, this, true);
-        TotalPoint += Mathf.Min(card.number, 10);
-        hands.Add(card);
+        TotalPoint += Mathf.Min(card.Number, 10);
+        Hands.Add(card);
     }
 
     /// <summary>
@@ -46,7 +51,7 @@ public class BlackJackDealer : BlackJackPlayer
     /// </summary>
     private void HiddenPoint()
     {
-        pointDisplay.text = $"{Mathf.Min(hands[0].number,10)}+";
+        pointDisplay.text = $"{Mathf.Min(Hands[0].Number,10)}+";
     }
 
     /// <summary>
@@ -59,6 +64,10 @@ public class BlackJackDealer : BlackJackPlayer
             return BJDealerState.Burst;
         }
         if(Check17orMore())
+        {
+            return BJDealerState.Seventeen;
+        }
+        if(Hands.Count >= 7)
         {
             return BJDealerState.Seventeen;
         }

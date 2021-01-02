@@ -5,6 +5,101 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 /// <summary>
+/// トランプのスート。
+/// </summary>
+public enum Suit
+{
+    Spade,
+    Heart,
+    Club,
+    Dia
+}
+
+/// <summary>
+/// トランプのカード。
+/// </summary>
+public class Card
+{
+    /// <summary>
+    /// カードの値。
+    /// </summary>
+    public int Number { get; protected set; }
+
+    /// <summary>
+    /// カードの表示上の値。
+    /// </summary>
+    public string DisplayNumber { get; protected set; } = "?";
+
+    /// <summary>
+    /// カードのスート。
+    /// </summary>
+    public Suit Suit { get; protected set; }
+
+    public Card(int number, Suit suit)
+    {
+        Number = number;
+        Suit = suit;
+
+        if(number == 1)
+        {
+            DisplayNumber = "A";
+        }
+        else if (number < 11)
+        {
+            DisplayNumber = number.ToString();
+        }
+        else if (number == 11)
+        {
+            DisplayNumber = "J";
+        }
+        else if (number == 12)
+        {
+            DisplayNumber = "Q";
+        }
+        else if (number == 13)
+        {
+            DisplayNumber = "K";
+        }
+    }
+}
+
+/*
+/// <summary>
+/// ブラックジャック用のカード。
+/// </summary>
+public class BlackJackCard : Card
+{
+    public bool isAce = false;
+    public BlackJackCard(int number, Suit suit) : base(number, suit)
+    {
+        Number = number;
+        Suit = suit;
+
+        if (number == 1)
+        {
+            DisplayNumber = "A";
+        }
+        else if (number < 11)
+        {
+            DisplayNumber = number.ToString();
+        }
+        else if (number == 11)
+        {
+            DisplayNumber = "J";
+        }
+        else if (number == 12)
+        {
+            DisplayNumber = "Q";
+        }
+        else if (number == 13)
+        {
+            DisplayNumber = "K";
+        }
+    }
+}
+*/
+
+/// <summary>
 /// カードのゲーム上での実体。
 /// </summary>
 public class CardInstance : MonoBehaviour
@@ -34,8 +129,8 @@ public class CardInstance : MonoBehaviour
     /// </summary>
     public void SetCardInfo(Card card)
     {
-        number.text = card.number.ToString();
-        suitSprite.sprite = suits[(int)card.suit];
+        number.text = card.DisplayNumber;
+        suitSprite.sprite = suits[(int)card.Suit];
     }
 
     /// <summary>

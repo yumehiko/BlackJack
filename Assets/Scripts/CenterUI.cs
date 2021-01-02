@@ -28,18 +28,18 @@ public class CenterUI : MonoBehaviour
     /// UIの状態（表示情報）を変更。
     /// </summary>
     /// <param name="state"></param>
-    public void ChangeState(GameState state)
+    public void ChangeState(GameState state, int UIMode)
     {
         ChangeMessage(messages[(int)state]);
 
         buttonSets[0].SetActive(false);
         buttonSets[1].SetActive(false);
 
-        if(state == GameState.HitOrStand)
+        if (UIMode == 1)
         {
             buttonSets[0].SetActive(true);
         }
-        else if( (state == GameState.YouWin) || (state == GameState.YouLose) )
+        else if (UIMode == 2) 
         {
             buttonSets[1].SetActive(true);
         }

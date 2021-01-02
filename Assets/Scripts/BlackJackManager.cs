@@ -12,7 +12,8 @@ public enum GameState
     Wait,
     HitOrStand,
     YouWin,
-    YouLose
+    YouLose,
+    UnderSeven
 }
 
 /// <summary>
@@ -74,23 +75,25 @@ public class BlackJackManager : MonoBehaviour
     {
         deck.ResetInstances();
         deck.ShuffleDeck();
-        ChangeState(GameState.Wait);
+        ChangeState(GameState.Wait, 0);
 
         soundDirector.PlaySound();
         player.NewHands();
         dealer.NewHands();
 
-        DOVirtual.DelayedCall(animeDuration, () => ChangeState(GameState.HitOrStand));
+        DOVirtual.DelayedCall(animeDuration, () =>
+        ChangeState(GameState.HitOrStand, 1)
+        );
     }
 
     /// <summary>
     /// ゲームマネージャーの状態を変更。
     /// </summary>
     /// <param name="newState"></param>
-    private void ChangeState(GameState newState)
+    private void ChangeState(GameState newState, int UIMode)
     {
         gameState = newState;
-        centerUI.ChangeState(gameState);
+        centerUI.ChangeState(gameState, UIMode);
     }
     
     /// <summary>
@@ -105,19 +108,28 @@ public class BlackJackManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ゲームに勝利する。終了処理を行う。
+    /// ゲームに勝利する。
     /// </summary>
-    public void WinGame()
+    private void WinGame()
     {
-        ChangeState(GameState.YouWin);
+        ChangeState(GameState.YouWin, 2);
     }
 
     /// <summary>
-    /// ゲームに敗北する。終了処理を行う。
+    /// 特別な役で勝利する。
     /// </summary>
-    public void LoseGame()
+    private void WinGame(GameState winRole)
     {
-        ChangeState(GameState.YouLose);
+        ChangeState(winRole, 2);
+    }
+
+
+    /// <summary>
+    /// ゲームに敗北する。
+    /// </summary>
+    private void LoseGame()
+    {
+        ChangeState(GameState.YouLose, 2);
     }
 
     /// <summary>
@@ -128,7 +140,7 @@ public class BlackJackManager : MonoBehaviour
         soundDirector.PlaySound();
         Card card = deck.PickCard();
         player.DrawCard(card);
-        ChangeState(GameState.Wait);
+        ChangeState(GameState.Wait, 0);
 
         DOVirtual.DelayedCall(animeDuration, () =>
         player.DisplayTotalPoint()
@@ -140,10 +152,16 @@ public class BlackJackManager : MonoBehaviour
             LoseGame()
             );
         }
+        else if(player.Hands.Count >= 7)
+        {
+            DOVirtual.DelayedCall(animeDuration, () =>
+            WinGame(GameState.UnderSeven)
+            );
+        }
         else
         {
             DOVirtual.DelayedCall(animeDuration, () =>
-            ChangeState(GameState.HitOrStand)
+            ChangeState(GameState.HitOrStand, 1)
             );
         }
     }
@@ -153,7 +171,7 @@ public class BlackJackManager : MonoBehaviour
     /// </summary>
     public void CallStand()
     {
-        ChangeState(GameState.Wait);
+        ChangeState(GameState.Wait, 0);
         dealer.FlipHiddenCard();
         soundDirector.PlaySound();
 
@@ -216,6 +234,6 @@ public class BlackJackManager : MonoBehaviour
     /// </summary>
     public void ReturnTitle()
     {
-        ChangeState(GameState.PrevStart);
+        ChangeState(GameState.PrevStart, 0);
     }
 }

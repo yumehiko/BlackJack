@@ -19,7 +19,12 @@ public class BlackJackPlayer : MonoBehaviour
     /// <summary>
     /// 手札にあるカードのリスト。
     /// </summary>
-    protected List<Card> hands = new List<Card>();
+    public List<Card> Hands { get; protected set; }
+
+    /// <summary>
+    /// 有効な（11として扱っている）エースの枚数。
+    /// </summary>
+    private int ace = 0;
 
     /// <summary>
     /// カードの合計点
@@ -54,9 +59,23 @@ public class BlackJackPlayer : MonoBehaviour
     /// <param name="card"></param>
     public void DrawCard(Card card)
     {
+        if(card.Number == 1)
+        {
+            AddAce();
+        }
+
         deck.DealCardAnime(card, this, false);
-        TotalPoint += Mathf.Min(card.number, 10);
-        hands.Add(card);
+        TotalPoint += Mathf.Min(card.Number, 10);
+        Hands.Add(card);
+    }
+
+    /// <summary>
+    /// Aを引いたなら、それを記憶して11として扱う。
+    /// </summary>
+    protected void AddAce()
+    {
+        ace++;
+        TotalPoint += 10;
     }
 
     /// <summary>
@@ -76,7 +95,7 @@ public class BlackJackPlayer : MonoBehaviour
     /// </summary>
     protected void DiscardHand()
     {
-        hands.Clear();
+        Hands = new List<Card>();
         TotalPoint = 0;
         pointDisplay.color = BlackJackManager.lightWhite;
         DisplayTotalPoint();
@@ -88,15 +107,31 @@ public class BlackJackPlayer : MonoBehaviour
     /// <returns></returns>
     public Vector2 GetDealPosition()
     {
-        return cardPositions[hands.Count].position;
+        return cardPositions[Hands.Count].position;
     }
 
     /// <summary>
     /// バーストしたかを確認。
     /// </summary>
-    /// <returns></returns>
+    /// <returns>バーストしたならTrue</returns>
     public bool CheckBurst()
     {
-        return TotalPoint > 21;
+        if (TotalPoint > 21)
+        {
+            if (ace <= 0)
+            {
+                return true;
+            }
+            else
+            {
+                ace--;
+                TotalPoint -= 10;
+                return CheckBurst();
+            }
+        }
+        else
+        {
+            return false;
+        }
     }
 }

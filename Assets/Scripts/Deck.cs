@@ -6,32 +6,6 @@ using System.Linq;
 using DG.Tweening;
 
 /// <summary>
-/// トランプのスート。
-/// </summary>
-public enum Suit
-{
-    Spade,
-    Heart,
-    Club,
-    Dia
-}
-
-/// <summary>
-/// トランプのカード。
-/// </summary>
-public class Card
-{
-    public int number { get; private set; }
-    public Suit suit { get; private set; }
-
-    public Card(int number, Suit suit)
-    {
-        this.number = number;
-        this.suit = suit;
-    }
-}
-
-/// <summary>
 /// Cardを52枚保持し、管理する。
 /// </summary>
 public class Deck : MonoBehaviour
