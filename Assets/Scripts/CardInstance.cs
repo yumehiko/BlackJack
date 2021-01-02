@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 /// <summary>
 /// カードのゲーム上での実体。
@@ -31,11 +32,10 @@ public class CardInstance : MonoBehaviour
     /// <summary>
     /// カード情報を実体に反映する。
     /// </summary>
-    public void SetCardInfo(Card card, bool isReverse)
+    public void SetCardInfo(Card card)
     {
         number.text = card.number.ToString();
         suitSprite.sprite = suits[(int)card.suit];
-        cardBack.SetActive(isReverse);
     }
 
     /// <summary>
@@ -45,5 +45,29 @@ public class CardInstance : MonoBehaviour
     public void ReverseCard(bool isReverse)
     {
         cardBack.SetActive(isReverse);
+    }
+
+    /// <summary>
+    /// カードを指定の位置に移動する。
+    /// </summary>
+    /// <param name="position"></param>
+    public void CardMove(Vector3 position)
+    {
+        position.z = -5.0f;
+        transform.DOMove(position, BlackJackManager.animeDuration);
+        Vector3 rotate = new Vector3(0.0f, transform.eulerAngles.y, 0.0f);
+        transform.DORotate(rotate, BlackJackManager.animeDuration);
+    }
+
+    /// <summary>
+    /// カードを裏返す。
+    /// </summary>
+    public void FlipCard()
+    {
+        
+        Vector3 rotate = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y - 180.0f, transform.eulerAngles.z);
+        transform.DORotate(rotate, BlackJackManager.animeDuration);
+        
+        //transform.DORotate(Vector3.zero, 1.0f);
     }
 }

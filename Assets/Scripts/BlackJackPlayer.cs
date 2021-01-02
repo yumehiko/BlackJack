@@ -5,9 +5,9 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 /// <summary>
-/// ゲームのプレイヤー。
+/// ブラックジャックのプレイヤー。
 /// </summary>
-public class Player : MonoBehaviour
+public class BlackJackPlayer : MonoBehaviour
 {
     /// <summary>
     /// カードの合計点数の表示UI
@@ -24,19 +24,12 @@ public class Player : MonoBehaviour
     /// <summary>
     /// カードの合計点
     /// </summary>
-    public int totalPoint { get; protected set; }
+    public int TotalPoint { get; protected set; }
 
     /// <summary>
-    /// カードを配る最初の位置。
+    /// カードを配置する位置リスト。
     /// </summary>
-    protected float dealFirstPosition = -7.7f;
-
-    /// <summary>
-    /// カードの間隔。
-    /// </summary>
-    protected float dealMargin = 2.2f;
-
-    
+    [SerializeField] private List<Transform> cardPositions = default;
 
     /// <summary>
     /// 新たなハンドを作る。2枚カードを引く。
@@ -50,7 +43,7 @@ public class Player : MonoBehaviour
         DrawCard(pickCard);
         pickCard = deck.PickCard();
         DrawCard(pickCard);
-        DOVirtual.DelayedCall(1.0f, () =>
+        DOVirtual.DelayedCall(BlackJackManager.animeDuration, () =>
         DisplayTotalPoint()
         );
     }
@@ -62,7 +55,7 @@ public class Player : MonoBehaviour
     public void DrawCard(Card card)
     {
         deck.DealCardAnime(card, this, false);
-        totalPoint += Mathf.Min(card.number, 10);
+        TotalPoint += Mathf.Min(card.number, 10);
         hands.Add(card);
     }
 
@@ -71,7 +64,11 @@ public class Player : MonoBehaviour
     /// </summary>
     public void DisplayTotalPoint()
     {
-        pointDisplay.text = totalPoint.ToString();
+        if(CheckBurst())
+        {
+            pointDisplay.color = BlackJackManager.burstRed;
+        }
+        pointDisplay.text = TotalPoint.ToString();
     }
 
     /// <summary>
@@ -80,7 +77,8 @@ public class Player : MonoBehaviour
     protected void DiscardHand()
     {
         hands.Clear();
-        totalPoint = 0;
+        TotalPoint = 0;
+        pointDisplay.color = BlackJackManager.lightWhite;
         DisplayTotalPoint();
     }
 
@@ -88,9 +86,17 @@ public class Player : MonoBehaviour
     /// 次にカードを配る座標を取得
     /// </summary>
     /// <returns></returns>
-    public virtual Vector2 GetDealPosition()
+    public Vector2 GetDealPosition()
     {
-        float x = -7.7f + (2.2f * hands.Count);
-        return new Vector2(x, transform.position.y);
+        return cardPositions[hands.Count].position;
+    }
+
+    /// <summary>
+    /// バーストしたかを確認。
+    /// </summary>
+    /// <returns></returns>
+    public bool CheckBurst()
+    {
+        return TotalPoint > 21;
     }
 }

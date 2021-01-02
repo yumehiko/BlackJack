@@ -891,6 +891,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointDisplay: {fileID: 1847134062}
   deck: {fileID: 1600188230}
+  cardPositions:
+  - {fileID: 42860871}
+  - {fileID: 522481493}
+  - {fileID: 1757797301}
+  - {fileID: 811667462}
+  - {fileID: 2108535254}
+  - {fileID: 366417448}
+  - {fileID: 829809774}
 --- !u!1 &352178923
 GameObject:
   m_ObjectHideFlags: 0
@@ -2989,6 +2997,8 @@ GameObject:
   - component: {fileID: 1600188229}
   - component: {fileID: 1600188228}
   - component: {fileID: 1600188230}
+  - component: {fileID: 1600188232}
+  - component: {fileID: 1600188231}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3012,6 +3022,7 @@ MonoBehaviour:
   player: {fileID: 335318964}
   dealer: {fileID: 1966894353}
   centerUI: {fileID: 79352450}
+  soundDirector: {fileID: 1600188232}
 --- !u!4 &1600188229
 Transform:
   m_ObjectHideFlags: 0
@@ -3042,6 +3053,118 @@ MonoBehaviour:
   cardPrefab: {fileID: 3484490483556671327, guid: faa42489af041499c9c45001c9c55337,
     type: 3}
   CardInitPoint: {fileID: 1090408390}
+--- !u!82 &1600188231
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600188227}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1600188232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600188227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e39c1658bf04e54857f7091a36b76b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 1600188231}
+  clips:
+  - {fileID: 8300000, guid: 62980bf41677841adb1fee29d42b32f1, type: 3}
+  - {fileID: 8300000, guid: df04e309d0ca544fc9915e6a81005eec, type: 3}
 --- !u!1 &1626772522
 GameObject:
   m_ObjectHideFlags: 0
@@ -3459,6 +3582,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointDisplay: {fileID: 490017388}
   deck: {fileID: 1600188230}
+  cardPositions:
+  - {fileID: 1575778785}
+  - {fileID: 1063838642}
+  - {fileID: 328539569}
+  - {fileID: 1530641547}
+  - {fileID: 783749097}
+  - {fileID: 1246397011}
+  - {fileID: 1626772523}
 --- !u!1 &1968829013
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,7 +60,7 @@ public class Deck : MonoBehaviour
     /// <summary>
     /// 生成したカード実体のリスト。
     /// </summary>
-    private List<GameObject> cardInstances = new List<GameObject>();
+    private List<GameObject> cardInstances;
 
     /// <summary>
     /// 山札を構築
@@ -68,6 +68,7 @@ public class Deck : MonoBehaviour
     public void NewDeck()
     {
         deck = new List<Card>();
+        cardInstances = new List<GameObject>();
 
         for (int i = 0; i < 4; i++)
         {
@@ -119,14 +120,22 @@ public class Deck : MonoBehaviour
     /// <param name="card"></param>
     /// <param name="dealTarget"></param>
     /// <param name="isReverse"></param>
-    public void DealCardAnime(Card card, Player dealTarget, bool isReverse)
+    /// <returns>実体</returns>
+    public CardInstance DealCardAnime(Card card, BlackJackPlayer dealTarget, bool isReverse)
     {
-        Vector3 towardPosition = dealTarget.GetDealPosition();
-        towardPosition.z = -5.0f;
-        GameObject cardInstance = Instantiate(cardPrefab, CardInitPoint.position, Quaternion.identity, transform);
-        cardInstance.GetComponent<CardInstance>().SetCardInfo(card, isReverse);
-        cardInstances.Add(cardInstance);
-        
-        cardInstance.transform.DOMove(towardPosition, 1.0f);
+        Vector3 rotate = new Vector3(0.0f, 0.0f, 170.0f);
+        if(isReverse)
+        {
+            rotate.y = 180.0f;
+            rotate.z = 190.0f;
+        }
+
+        GameObject cardInstanceObject = Instantiate(cardPrefab, CardInitPoint.position, Quaternion.Euler(rotate), transform);
+        CardInstance cardInstance = cardInstanceObject.GetComponent<CardInstance>();
+        cardInstance.SetCardInfo(card);
+        cardInstances.Add(cardInstanceObject);
+        cardInstance.CardMove(dealTarget.GetDealPosition());
+
+        return cardInstance;
     }
 }
