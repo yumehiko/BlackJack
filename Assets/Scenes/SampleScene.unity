@@ -430,7 +430,7 @@ MonoBehaviour:
   messages:
   - 'Click to Start
 
-    Tab key for hints'
+    TAB key for hints'
   - Please Wait...
   - Hit or Stand?
   - 'You Win!
@@ -657,7 +657,7 @@ MonoBehaviour:
     m_LineSpacing: 0.75
   m_Text: 'Click to Start
 
-    - TAB key - for hints'
+    TAB key for hints'
 --- !u!222 &165630545
 CanvasRenderer:
   m_ObjectHideFlags: 0
