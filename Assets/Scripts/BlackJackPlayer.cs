@@ -97,6 +97,7 @@ public class BlackJackPlayer : MonoBehaviour
     {
         Hands = new List<Card>();
         TotalPoint = 0;
+        ace = 0;
         pointDisplay.color = BlackJackManager.lightWhite;
         DisplayTotalPoint();
     }

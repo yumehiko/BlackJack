@@ -46,12 +46,16 @@ public class BlackJackManager : MonoBehaviour
     [SerializeField] private BlackJackDealer dealer = default;
     [SerializeField] private CenterUI centerUI = default;
     [SerializeField] private SoundDirector soundDirector = default;
+    [SerializeField] private GameObject pauseMenu = default;
 
     private void Start()
     {
         Initialization();
     }
 
+    /// <summary>
+    /// ゲーム開始時の初期化処理。
+    /// </summary>
     private void Initialization()
     {
         deck.NewDeck();
@@ -59,13 +63,36 @@ public class BlackJackManager : MonoBehaviour
 
     private void Update()
     {
-        if(gameState == GameState.PrevStart)
+        CheckInput();
+    }
+
+    /// <summary>
+    /// 入力を監視し、入力に応じた処理を行う。
+    /// </summary>
+    private void CheckInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
-            if(Input.GetMouseButtonDown(0))
+            SwitchPauseMenu();
+        }
+
+        if (gameState == GameState.PrevStart && (!pauseMenu.activeSelf))
+        {
+            if (Input.GetMouseButtonDown(0))
             {
                 NewGame();
             }
         }
+
+        
+    }
+
+    /// <summary>
+    /// ポーズメニューのアクティブ状態を切り替える。
+    /// </summary>
+    private void SwitchPauseMenu()
+    {
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
     }
 
     /// <summary>
