@@ -10,6 +10,9 @@ public enum BJDealerState
     Seventeen
 }
 
+/// <summary>
+/// ブラックジャックのディーラー。
+/// </summary>
 public class BlackJackDealer : BlackJackPlayer
 {
     private CardInstance hiddenCard;
@@ -51,7 +54,17 @@ public class BlackJackDealer : BlackJackPlayer
     /// </summary>
     private void HiddenPoint()
     {
-        pointDisplay.text = $"{Mathf.Min(Hands[0].Number,10)}+";
+        int point;
+        if (Hands[0].Number == 1)
+        {
+            point = 11;
+        }
+        else
+        {
+            point = Mathf.Min(Hands[0].Number, 10);
+        }
+
+        pointDisplay.text = $"{point}+";
     }
 
     /// <summary>
