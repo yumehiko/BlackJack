@@ -63,42 +63,6 @@ public class Card
     }
 }
 
-/*
-/// <summary>
-/// ブラックジャック用のカード。
-/// </summary>
-public class BlackJackCard : Card
-{
-    public bool isAce = false;
-    public BlackJackCard(int number, Suit suit) : base(number, suit)
-    {
-        Number = number;
-        Suit = suit;
-
-        if (number == 1)
-        {
-            DisplayNumber = "A";
-        }
-        else if (number < 11)
-        {
-            DisplayNumber = number.ToString();
-        }
-        else if (number == 11)
-        {
-            DisplayNumber = "J";
-        }
-        else if (number == 12)
-        {
-            DisplayNumber = "Q";
-        }
-        else if (number == 13)
-        {
-            DisplayNumber = "K";
-        }
-    }
-}
-*/
-
 /// <summary>
 /// カードのゲーム上での実体。
 /// </summary>
@@ -120,26 +84,12 @@ public class CardInstance : MonoBehaviour
     [SerializeField] private List<Sprite> suits = default;
 
     /// <summary>
-    /// カードの裏面。
-    /// </summary>
-    [SerializeField] private GameObject cardBack = default;
-
-    /// <summary>
     /// カード情報を実体に反映する。
     /// </summary>
     public void SetCardInfo(Card card)
     {
         number.text = card.DisplayNumber;
         suitSprite.sprite = suits[(int)card.Suit];
-    }
-
-    /// <summary>
-    /// カードを裏返す。Trueなら裏向きに。
-    /// </summary>
-    /// <param name="isActive"></param>
-    public void ReverseCard(bool isReverse)
-    {
-        cardBack.SetActive(isReverse);
     }
 
     /// <summary>
